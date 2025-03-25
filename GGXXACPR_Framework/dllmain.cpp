@@ -1,8 +1,7 @@
-// dllmain.cpp : Defines the entry point for the DLL application.
-
 #include "pch.h"
 #include "dinput8.h"
 #include "GGFramework.h"
+#include "Console.h"
 
 auto init() -> void
 {
@@ -16,11 +15,12 @@ auto init() -> void
         OriginalFunction = reinterpret_cast<DirectInput8Create_t>(GetProcAddress(DInput8DLL, "DirectInput8Create"));
     }
 
+	CreateConsole();
     GGFramework* framework = GGFramework::get_instance();
 }
 
 BOOL APIENTRY DllMain([[maybe_unused]] HMODULE Module,
-                      DWORD  ReasonForCall,
+                      DWORD ReasonForCall,
                       [[maybe_unused]] LPVOID Reserved)
 {
     switch (ReasonForCall)

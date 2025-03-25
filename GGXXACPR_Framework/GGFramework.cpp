@@ -398,14 +398,14 @@ auto GGFramework::initialize() -> void
         }
     });
 
-    /*cmn_attack_check_hook_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x38fe8e, [](SafetyHookContext& ctx)
+    cmn_attack_check_hook_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x38fe8a, [](SafetyHookContext& ctx)
     {
-        if (static_cast<CharacterID>(ctx.ecx) > CharacterID::Justice)
+        if (*reinterpret_cast<CharacterID*>(ctx.edi) > CharacterID::Justice)
         {
-            if (ctx.ecx - static_cast<uint32_t>(CharacterID::Justice) > near_slash_dists_.size()) return;
-            ctx.edx = near_slash_dists_[ctx.ecx - static_cast<uint32_t>(CharacterID::Justice) - 1];
+            if (*reinterpret_cast<uint16_t*>(ctx.edi) - static_cast<uint32_t>(CharacterID::Justice) > near_slash_dists_.size()) return;
+            ctx.edx = near_slash_dists_[*reinterpret_cast<uint16_t*>(ctx.edi) - static_cast<uint32_t>(CharacterID::Justice) - 1];
         }
-    });*/
+    });
 }
 
 auto GGFramework::register_act_tb(void* act_tb) -> void

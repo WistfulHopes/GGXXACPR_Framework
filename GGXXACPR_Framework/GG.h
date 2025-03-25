@@ -33,6 +33,19 @@ enum class CharacterID : uint16_t
 
 #pragma pack(push, 1)
 
+struct Camera {
+	char pad1[16];
+	int CenterXPos{};
+	int BottomEdge{};
+	char pad2[8];
+	int LeftEdge{};
+	char pad3[4];
+	int Width{};
+	int Height{};
+	char pad[20];
+	float Zoom{};
+};
+
 union PERSONALWORK
 {
 	int32_t l;
@@ -252,6 +265,59 @@ union ACTWORK
 	uint8_t ub[0x4];
 	float f;
 	void* p;
+};
+
+struct HITSEPARAM
+{
+	unsigned char no[0x2];
+	unsigned char flag[0x2];
+};
+
+union HITSEUNION
+{
+	unsigned int l;
+	struct HITSEPARAM param;
+};
+
+struct DAMAGEPARAM
+{
+	unsigned short DownX;
+	unsigned short DownY;
+	unsigned short DownGrav;
+	unsigned short DownUkemiTime;
+	unsigned short FaintPoint;
+	unsigned short field5_0xa;
+	unsigned int DownFlag;
+	unsigned short Kezuri;
+	unsigned short DamageHosei;
+	union HITSEUNION HitSE;
+	union HITSEUNION GuardSE;
+	unsigned char dno; // used for hit level, but one less than on wiki
+	unsigned char dprob;
+	unsigned char gno; // used for hit level, but one less than on wiki
+	unsigned char gprob;
+	unsigned short field15_0x20; //these two could be the void* DamInt
+	unsigned short field16_0x22;
+	char field17_0x24;
+	char field18_0x25; //used for initial proration
+	char field19_0x26;
+	char field20_0x27;
+	char field21_0x28;
+	char field22_0x29;
+	char field23_0x2a;
+	char field24_0x2b;
+};
+
+struct TACTNORMAL
+{
+	unsigned char id;
+	unsigned char arg1;
+	unsigned short arg2;
+	unsigned short arg3;
+	unsigned short arg4;
+	unsigned char arg5;
+	unsigned char arg6;
+	unsigned char arg7;
 };
 
 struct CHARACTER_WORK
