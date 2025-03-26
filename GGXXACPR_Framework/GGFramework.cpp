@@ -63,11 +63,11 @@ auto GGFramework::initialize() -> void
         .sky_width = 0xBB8, .sky_height = 0x1B58, .sky_base_height = 0xFA0
     });
     register_normal_attack_disable(0xe025ffff);
-    register_near_slash_dist(0x4268);
-    register_throw_range(0x10CC);
-    register_air_throw_range_x(0x2AF8);
-    register_air_throw_range_y(0xD8F0);
-    register_air_throw_range_y_bottom(0xBB8);
+    register_near_slash_dist(17000);
+    register_throw_range(4300);
+    register_air_throw_range_x(11000);
+    register_air_throw_range_y(-10000);
+    register_air_throw_range_y_bottom(3000);
     register_throw_act_no(0xD6);
     register_throw_damage_no_tb({
         0x00, 0xD7, 0x70, 0xBE, 0x69, 0xCC, 0xBC, 0x79, 0x6B, 0x6B, 0x6F, 0xAF, 0x80, 0x67, 0x6C, 0x76, 0x63, 0xA0, 0x9A,
@@ -92,7 +92,7 @@ auto GGFramework::initialize() -> void
         }
     });
 
-    load_obj_file_hook_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x113d10, [](SafetyHookContext& ctx)
+    load_obj_file_hook_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x113d17, [](SafetyHookContext& ctx)
     {
         const auto current_characters = reinterpret_cast<CharacterID*>(reinterpret_cast<uintptr_t>(base) + 0x6d660c);
         if (current_characters[0] <= CharacterID::Justice) return;
@@ -110,7 +110,7 @@ auto GGFramework::initialize() -> void
             CharacterID::Justice) - 1].c_str());
     });
 
-    load_obj_file_hook_3_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x113de3, [](SafetyHookContext& ctx)
+    load_obj_file_hook_3_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x113dea, [](SafetyHookContext& ctx)
     {
         const auto current_characters = reinterpret_cast<CharacterID*>(reinterpret_cast<uintptr_t>(base) + 0x6d660c);
         if (current_characters[0] <= CharacterID::Justice) return;
@@ -183,7 +183,7 @@ auto GGFramework::initialize() -> void
         if (ctx.eax >= static_cast<uintptr_t>(CharacterID::Justice))
         {
             if (ctx.eax - static_cast<uint32_t>(CharacterID::Justice) >= obj_ids.size()) return;
-            auto result = obj_ids[ctx.eax - static_cast<uint32_t>(CharacterID::Justice)];
+            const auto result = obj_ids[ctx.eax - static_cast<uint32_t>(CharacterID::Justice)];
 
             if (result == nullptr) return;
 

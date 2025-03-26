@@ -14,7 +14,7 @@ struct PushColli
     int16_t sky_base_height;
 };
 
-class GGFRAMEWORK_API GGFramework
+class GGFramework
 {
 private:
     GGFramework()
@@ -98,24 +98,24 @@ private:
 public:
     GGFramework(const GGFramework&) = delete;
 
-    static auto get_instance() -> GGFramework*;
+    static auto GGFRAMEWORK_API get_instance() -> GGFramework*;
     
-    static auto register_act_tb(void* act_tb) -> void;
-    static auto register_obj_id(void* obj_id) -> void;
-    static auto register_chara_id(const std::string& id) -> void;
-    static auto register_input_check_func(int32_t (*func)(CHARACTER_WORK*)) -> void;
-    static auto register_taunt_check_func(int32_t (*func)(CHARACTER_WORK*)) -> void;
-    static auto register_respect_check_func(int32_t (*func)(CHARACTER_WORK*)) -> void;
-    static auto register_special_attack_check_func(int32_t (*func)(CHARACTER_WORK*)) -> void;
-    static auto register_push_colli(const PushColli& push_colli) -> void;
-    static auto register_normal_attack_disable(uint32_t disable) -> void;
-    static auto register_near_slash_dist(int16_t dist) -> void;
-    static auto register_throw_range(int16_t range) -> void;
-    static auto register_air_throw_range_x(int16_t range) -> void;
-    static auto register_air_throw_range_y(int16_t range) -> void;
-    static auto register_air_throw_range_y_bottom(int16_t range) -> void;
-    static auto register_throw_act_no(uint16_t no) -> void;
-    static auto register_throw_damage_no_tb(std::vector<uint16_t> tb) -> void;
-    static auto register_air_throw_act_no(uint16_t no) -> void;
-    static auto register_air_throw_damage_no_tb(std::vector<uint16_t> tb) -> void;
+    static auto GGFRAMEWORK_API register_act_tb(void* act_tb) -> void;
+    static auto GGFRAMEWORK_API register_obj_id(void* obj_id) -> void;
+    static auto GGFRAMEWORK_API register_chara_id(const std::string& id) -> void;
+    static auto GGFRAMEWORK_API register_input_check_func(int32_t (*func)(CHARACTER_WORK*)) -> void;
+    static auto GGFRAMEWORK_API register_taunt_check_func(int32_t (*func)(CHARACTER_WORK*)) -> void;
+    static auto GGFRAMEWORK_API register_respect_check_func(int32_t (*func)(CHARACTER_WORK*)) -> void;
+    static auto GGFRAMEWORK_API register_special_attack_check_func(int32_t (*func)(CHARACTER_WORK*)) -> void;
+    static auto GGFRAMEWORK_API register_push_colli(const PushColli& push_colli) -> void;
+    static auto GGFRAMEWORK_API register_normal_attack_disable(uint32_t disable) -> void;
+    static auto GGFRAMEWORK_API register_near_slash_dist(int16_t dist) -> void;
+    static auto GGFRAMEWORK_API register_throw_range(int16_t range) -> void;
+    static auto GGFRAMEWORK_API register_air_throw_range_x(int16_t range) -> void;
+    static auto GGFRAMEWORK_API register_air_throw_range_y(int16_t range) -> void;
+    static auto GGFRAMEWORK_API register_air_throw_range_y_bottom(int16_t range) -> void;
+    static auto GGFRAMEWORK_API register_throw_act_no(uint16_t no) -> void;
+    static auto GGFRAMEWORK_API register_throw_damage_no_tb(std::vector<uint16_t> tb) -> void;
+    static auto GGFRAMEWORK_API register_air_throw_act_no(uint16_t no) -> void;
+    static auto GGFRAMEWORK_API register_air_throw_damage_no_tb(std::vector<uint16_t> tb) -> void;
 };
