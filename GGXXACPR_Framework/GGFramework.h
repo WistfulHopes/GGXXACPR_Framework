@@ -5,13 +5,13 @@
 
 struct PushColli
 {
-    uint16_t stand_width;
-    uint16_t stand_height;
-    uint16_t sit_width;
-    uint16_t sit_height;
-    uint16_t sky_width;
-    uint16_t sky_height;
-    uint16_t sky_base_height;
+    int16_t stand_width;
+    int16_t stand_height;
+    int16_t sit_width;
+    int16_t sit_height;
+    int16_t sky_width;
+    int16_t sky_height;
+    int16_t sky_base_height;
 };
 
 class GGFRAMEWORK_API GGFramework
@@ -61,7 +61,19 @@ private:
     SafetyHookMid normal_attack_disable_table_hook_;
     SafetyHookMid normal_attack_disable_table_hook_2_;
     SafetyHookMid cmn_attack_check_hook_;
-    
+    SafetyHookMid player_throw_flag_set_hook_;
+    SafetyHookMid player_throw_flag_set_hook_2_;
+    SafetyHookMid throw_range_check_hook_;
+    SafetyHookMid throw_range_check_hook_2_;
+    SafetyHookMid air_throw_range_check_hook_x_;
+    SafetyHookMid air_throw_range_check_hook_x_2_;
+    SafetyHookMid air_throw_range_check_hook_y_;
+    SafetyHookMid air_throw_range_check_hook_y_bottom_;
+    SafetyHookMid player_throw_check_hook_;
+    SafetyHookMid player_throw_check_hook_2_;
+    SafetyHookMid player_throw_check_hook_3_;
+    SafetyHookMid player_throw_check_hook_4_;
+
     static std::vector<void*> act_tbs;
     static std::vector<void*> obj_ids;
     static std::vector<std::string> chara_paths_;
@@ -71,7 +83,15 @@ private:
     static std::vector<int32_t(*)(CHARACTER_WORK*)> special_attack_check_funcs_;
     static std::vector<PushColli> push_collis_;
     static std::vector<uint32_t> normal_attack_disables_;
-    static std::vector<uint16_t> near_slash_dists_;
+    static std::vector<int16_t> near_slash_dists_;
+    static std::vector<int16_t> throw_ranges_;
+    static std::vector<int16_t> air_throw_ranges_x_;
+    static std::vector<int16_t> air_throw_ranges_y_;
+    static std::vector<int16_t> air_throw_ranges_y_bottom_;
+    static std::vector<uint16_t> throw_act_nos_;
+    static std::vector<std::vector<uint16_t>> throw_damage_no_tbs;
+    static std::vector<uint16_t> air_throw_act_nos_;
+    static std::vector<std::vector<uint16_t>> air_throw_damage_no_tbs;
     static int* game_version_;
     auto initialize() -> void;
 
@@ -89,5 +109,13 @@ public:
     static auto register_special_attack_check_func(int32_t (*func)(CHARACTER_WORK*)) -> void;
     static auto register_push_colli(const PushColli& push_colli) -> void;
     static auto register_normal_attack_disable(uint32_t disable) -> void;
-    static auto register_near_slash_dist(uint16_t dist) -> void;
+    static auto register_near_slash_dist(int16_t dist) -> void;
+    static auto register_throw_range(int16_t range) -> void;
+    static auto register_air_throw_range_x(int16_t range) -> void;
+    static auto register_air_throw_range_y(int16_t range) -> void;
+    static auto register_air_throw_range_y_bottom(int16_t range) -> void;
+    static auto register_throw_act_no(uint16_t no) -> void;
+    static auto register_throw_damage_no_tb(std::vector<uint16_t> tb) -> void;
+    static auto register_air_throw_act_no(uint16_t no) -> void;
+    static auto register_air_throw_damage_no_tb(std::vector<uint16_t> tb) -> void;
 };
