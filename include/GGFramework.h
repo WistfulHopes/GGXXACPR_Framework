@@ -98,24 +98,112 @@ private:
 public:
     GGFramework(const GGFramework&) = delete;
 
+    /**
+     * Retrieve the global GGFramework singleton.
+     * @return The GGFramework singleton.
+     */
     static auto GGFRAMEWORK_API get_instance() -> GGFramework*;
-    
+
+    /**
+     * Register a set of actions for your character.
+     * @param act_tb Array of function pointers per action.
+     */
     static auto GGFRAMEWORK_API register_act_tb(void* act_tb) -> void;
+
+    /**
+     * Register a set of object IDs for your character.
+     * @param obj_id Array of object IDs.
+     */
     static auto GGFRAMEWORK_API register_obj_id(void* obj_id) -> void;
+
+    /**
+     * Register a character ID for your character. Used for finding the bin file in obj.
+     * @param id Character ID, or the filename of your bin file (without extension).
+     */
     static auto GGFRAMEWORK_API register_chara_id(const std::string& id) -> void;
+
+    /**
+     * Register an input handler function for your character. Used to define command inputs.
+     * @param func The input handler function.
+     */
     static auto GGFRAMEWORK_API register_input_check_func(int32_t (*func)(CHARACTER_WORK*)) -> void;
+
+    /**
+     * Register a taunt handler function for your character.
+     * @param func The taunt handler function.
+     */
     static auto GGFRAMEWORK_API register_taunt_check_func(int32_t (*func)(CHARACTER_WORK*)) -> void;
+
+    /**
+     * Register a respect handler function for your character.
+     * @param func The taunt handler function.
+     */
     static auto GGFRAMEWORK_API register_respect_check_func(int32_t (*func)(CHARACTER_WORK*)) -> void;
     static auto GGFRAMEWORK_API register_special_attack_check_func(int32_t (*func)(CHARACTER_WORK*)) -> void;
+
+    /**
+     * Register push collision data for your character.
+     * @param push_colli The push collision data.
+     */
     static auto GGFRAMEWORK_API register_push_colli(const PushColli& push_colli) -> void;
+
+    /**
+     * Register disabled normal attacks for your character.
+     * @param disable The disabled normal attacks.
+     */
     static auto GGFRAMEWORK_API register_normal_attack_disable(uint32_t disable) -> void;
+
+    /**
+     * Register the maximum close slash distance for your character.
+     * @param dist The maximum close slash distance.
+     */
     static auto GGFRAMEWORK_API register_near_slash_dist(int16_t dist) -> void;
+
+    /**
+     * Register the ground throw range.
+     * @param range The ground throw range.
+     */
     static auto GGFRAMEWORK_API register_throw_range(int16_t range) -> void;
+
+    /**
+     * Register the air throw x-axis range.
+     * @param range The air throw x-axis range.
+     */
     static auto GGFRAMEWORK_API register_air_throw_range_x(int16_t range) -> void;
+
+    /**
+     * Register the air throw y-axis range.
+     * @param range The air throw y-axis range.
+     */
     static auto GGFRAMEWORK_API register_air_throw_range_y(int16_t range) -> void;
+
+    /**
+     * Register the air throw y-axis bottom.
+     * @param range The air throw y-axis bottom.
+     */
     static auto GGFRAMEWORK_API register_air_throw_range_y_bottom(int16_t range) -> void;
+
+    /**
+     * Register the throw action number.
+     * @param no The throw action number.
+     */
     static auto GGFRAMEWORK_API register_throw_act_no(uint16_t no) -> void;
+
+    /**
+     * Register the enemy's throw reaction numbers.
+     * @param no The enemy's throw reaction numbers.
+     */
     static auto GGFRAMEWORK_API register_throw_damage_no_tb(const std::vector<uint16_t> &tb) -> void;
+
+    /**
+     * Register the air throw action number.
+     * @param no The air throw action number.
+     */
     static auto GGFRAMEWORK_API register_air_throw_act_no(uint16_t no) -> void;
+
+    /**
+     * Register the enemy's air throw reaction numbers.
+     * @param no The enemy's air throw reaction numbers.
+     */
     static auto GGFRAMEWORK_API register_air_throw_damage_no_tb(const std::vector<uint16_t> &tb) -> void;
 };
