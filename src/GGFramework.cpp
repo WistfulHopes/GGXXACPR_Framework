@@ -28,8 +28,10 @@ std::vector<std::vector<uint16_t>> GGFramework::air_throw_damage_no_tbs{};
 namespace
 {
     HMODULE base;
+    /*
     int sl_reload_obj_ids [] { 0x1a, 0x2c, 0x42, -1 };
     int* obj_id_tb[] { sl_reload_obj_ids };
+    */
 }
 
 auto GGFramework::initialize() -> void
