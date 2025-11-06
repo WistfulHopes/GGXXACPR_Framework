@@ -6,30 +6,30 @@
 
 GGFramework* GGFramework::instance_ = nullptr;
 std::mutex GGFramework::mtx_{};
-std::vector<void*> GGFramework::act_tbs;
-std::vector<void*> GGFramework::obj_ids;
-std::vector<std::string> GGFramework::chara_paths_;
-int* GGFramework::game_version_;
-std::vector<int32_t(*)(CHARACTER_WORK*)> GGFramework::input_check_funcs_;
-std::vector<int32_t(*)(CHARACTER_WORK*)> GGFramework::taunt_check_funcs_;
-std::vector<int32_t(*)(CHARACTER_WORK*)> GGFramework::respect_check_funcs_;
-std::vector<int32_t(*)(CHARACTER_WORK*)> GGFramework::special_attack_check_funcs_;
-std::vector<PushColli> GGFramework::push_collis_;
-std::vector<uint32_t> GGFramework::normal_attack_disables_;
-std::vector<int16_t> GGFramework::near_slash_dists_;
-std::vector<int16_t> GGFramework::throw_ranges_;
-std::vector<int16_t> GGFramework::air_throw_ranges_x_;
-std::vector<int16_t> GGFramework::air_throw_ranges_y_;
-std::vector<int16_t> GGFramework::air_throw_ranges_y_bottom_;
-std::vector<uint16_t> GGFramework::throw_act_nos_;
-std::vector<std::vector<uint16_t>> GGFramework::throw_damage_no_tbs;
-std::vector<uint16_t> GGFramework::air_throw_act_nos_;
-std::vector<std::vector<uint16_t>> GGFramework::air_throw_damage_no_tbs;
+std::vector<void*> GGFramework::act_tbs{};
+std::vector<void*> GGFramework::obj_ids{};
+std::vector<std::string> GGFramework::chara_paths_{};
+int* GGFramework::game_version_{};
+std::vector<int32_t(*)(CHARACTER_WORK*)> GGFramework::input_check_funcs_{};
+std::vector<int32_t(*)(CHARACTER_WORK*)> GGFramework::taunt_check_funcs_{};
+std::vector<int32_t(*)(CHARACTER_WORK*)> GGFramework::respect_check_funcs_{};
+std::vector<int32_t(*)(CHARACTER_WORK*)> GGFramework::special_attack_check_funcs_{};
+std::vector<PushColli> GGFramework::push_collis_{};
+std::vector<uint32_t> GGFramework::normal_attack_disables_{};
+std::vector<int16_t> GGFramework::near_slash_dists_{};
+std::vector<int16_t> GGFramework::throw_ranges_{};
+std::vector<int16_t> GGFramework::air_throw_ranges_x_{};
+std::vector<int16_t> GGFramework::air_throw_ranges_y_{};
+std::vector<int16_t> GGFramework::air_throw_ranges_y_bottom_{};
+std::vector<uint16_t> GGFramework::throw_act_nos_{};
+std::vector<std::vector<uint16_t>> GGFramework::throw_damage_no_tbs{};
+std::vector<uint16_t> GGFramework::air_throw_act_nos_{};
+std::vector<std::vector<uint16_t>> GGFramework::air_throw_damage_no_tbs{};
 
 namespace
 {
     HMODULE base;
-    int sl_reload_obj_ids [] { 0x1a, 0x2c, 0x42 };
+    int sl_reload_obj_ids [] { 0x1a, 0x2c, 0x42, -1 };
     int* obj_id_tb[] { sl_reload_obj_ids };
 }
 

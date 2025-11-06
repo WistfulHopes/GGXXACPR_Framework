@@ -12,5 +12,5 @@
 #ifdef DLL_EXPORTS
 #define GGFRAMEWORK_API __declspec(dllexport)
 #else
-#define DINPUT8_API __declspec(dllimport)
+#define GGFRAMEWORK_API __declspec(dllimport)
 #endif
