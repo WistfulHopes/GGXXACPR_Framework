@@ -5,13 +5,13 @@
 
 struct PushColli
 {
-    int16_t stand_width;
-    int16_t stand_height;
-    int16_t sit_width;
-    int16_t sit_height;
-    int16_t sky_width;
-    int16_t sky_height;
-    int16_t sky_base_height;
+    int16_t stand_width{};
+    int16_t stand_height{};
+    int16_t sit_width{};
+    int16_t sit_height{};
+    int16_t sky_width{};
+    int16_t sky_height{};
+    int16_t sky_base_height{};
 };
 
 class GGFramework
