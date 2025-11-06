@@ -1,7 +1,6 @@
 ﻿#include "pch.h"
 #include "GGFramework.h"
 #include "GG.h"
-#include <algorithm>
 #include <iostream>
 
 GGFramework* GGFramework::instance_ = nullptr;
@@ -33,25 +32,12 @@ namespace
     int* obj_id_tb[] { sl_reload_obj_ids };
 }
 
-auto GGFramework::get_instance() -> GGFramework*
-{
-    if (instance_ == nullptr)
-    {
-        std::lock_guard lock(mtx_);
-        if (instance_ == nullptr)
-        {
-            instance_ = new GGFramework();
-        }
-    }
-    return instance_;
-}
-
 auto GGFramework::initialize() -> void
 {
-    base = GetModuleHandle(NULL);
+    base = GetModuleHandle(nullptr);
 
     game_version_ = reinterpret_cast<int*>(reinterpret_cast<uintptr_t>(base) + 0x6d0538);
-    
+
     register_chara_id("sl_reload");
     register_act_tb(reinterpret_cast<void*>(reinterpret_cast<uintptr_t>(base) + 0x5f08b8));
     register_obj_id(&obj_id_tb);
@@ -78,7 +64,7 @@ auto GGFramework::initialize() -> void
         0x00, 0xCD, 0xAD, 0xAF, 0xAC, 0xB4, 0xC2, 0xC7, 0xA7, 0xAA, 0xCE, 0x9D, 0xD3, 0xC4, 0xB6, 0xAE, 0x9B, 0xCB, 0xA3,
         0x82, 0x9F, 0xAD, 0x90, 0xCD, 0xB1, 0xAE,
     });
-    
+
     player_main_hook_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x137b5e, [](SafetyHookContext& ctx)
     {
         if (static_cast<CharacterID>(ctx.eax) > CharacterID::Justice)
@@ -98,7 +84,7 @@ auto GGFramework::initialize() -> void
         if (current_characters[0] <= CharacterID::Justice) return;
 
         ctx.eax = reinterpret_cast<uintptr_t>(chara_paths_[static_cast<int32_t>(current_characters[0]) - static_cast<int32_t>(
-            CharacterID::Justice) - 1].c_str());
+                                                               CharacterID::Justice) - 1].c_str());
     });
 
     load_obj_file_hook_2_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x113d80, [](SafetyHookContext& ctx)
@@ -107,7 +93,7 @@ auto GGFramework::initialize() -> void
         if (current_characters[1] <= CharacterID::Justice) return;
 
         ctx.eax = reinterpret_cast<uintptr_t>(chara_paths_[static_cast<int32_t>(current_characters[1]) - static_cast<int32_t>(
-            CharacterID::Justice) - 1].c_str());
+                                                               CharacterID::Justice) - 1].c_str());
     });
 
     load_obj_file_hook_3_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x113dea, [](SafetyHookContext& ctx)
@@ -116,7 +102,7 @@ auto GGFramework::initialize() -> void
         if (current_characters[0] <= CharacterID::Justice) return;
 
         ctx.eax = reinterpret_cast<uintptr_t>(chara_paths_[static_cast<int32_t>(current_characters[0]) - static_cast<int32_t>(
-            CharacterID::Justice) - 1].c_str());
+                                                               CharacterID::Justice) - 1].c_str());
     });
 
     load_obj_file_hook_4_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x113e47, [](SafetyHookContext& ctx)
@@ -125,7 +111,7 @@ auto GGFramework::initialize() -> void
         if (current_characters[0] <= CharacterID::Justice) return;
 
         ctx.eax = reinterpret_cast<uintptr_t>(chara_paths_[static_cast<int32_t>(current_characters[0]) - static_cast<int32_t>(
-            CharacterID::Justice) - 1].c_str());
+                                                               CharacterID::Justice) - 1].c_str());
     });
 
     load_obj_file_hook_5_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x113e92, [](SafetyHookContext& ctx)
@@ -134,14 +120,14 @@ auto GGFramework::initialize() -> void
         if (current_characters[1] <= CharacterID::Justice) return;
 
         ctx.eax = reinterpret_cast<uintptr_t>(chara_paths_[static_cast<int32_t>(current_characters[1]) - static_cast<int32_t>(
-            CharacterID::Justice) - 1].c_str());
+                                                               CharacterID::Justice) - 1].c_str());
     });
 
     allocate_file_hook_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x1139a2, [](SafetyHookContext& ctx)
     {
         if (ctx.esi > 0x8DB && ctx.esi < 0x8F3)
         {
-            ctx.edx = (uintptr_t)chara_paths_[static_cast<int32_t>(ctx.esi - 0x8DC)].c_str();
+            ctx.edx = reinterpret_cast<uintptr_t>(chara_paths_[static_cast<int32_t>(ctx.esi - 0x8DC)].c_str());
         }
     });
 
@@ -149,10 +135,10 @@ auto GGFramework::initialize() -> void
     {
         if (ctx.esi > 0x8DB && ctx.esi < 0x8F3)
         {
-            ctx.eax = (uintptr_t)chara_paths_[static_cast<int32_t>(ctx.esi - 0x8DC)].c_str();
+            ctx.eax = reinterpret_cast<uintptr_t>(chara_paths_[static_cast<int32_t>(ctx.esi - 0x8DC)].c_str());
         }
     });
-    
+
     chara_select_hook_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x1fe02d, [](SafetyHookContext& ctx)
     {
         if (ctx.eax >= static_cast<uintptr_t>(CharacterID::Justice)) ctx.eax = 0;
@@ -172,7 +158,7 @@ auto GGFramework::initialize() -> void
     {
         if (ctx.eax == 1) ctx.eax = 2;
     });
-    
+
     load_dlc_hook_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x36ecc3, [](SafetyHookContext& ctx)
     {
         if (*reinterpret_cast<int*>(ctx.ebp + 8) == 1) *reinterpret_cast<int*>(ctx.ebp + 8) = 2;
@@ -204,7 +190,7 @@ auto GGFramework::initialize() -> void
             ctx.eax = reinterpret_cast<uintptr_t>(result);
         }
     });
-    
+
     taunt_check_hook_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x38e787, [](SafetyHookContext& ctx)
     {
         const auto offset = reinterpret_cast<CHARACTER_WORK*>(ctx.esi);
@@ -218,7 +204,7 @@ auto GGFramework::initialize() -> void
             ctx.ecx = reinterpret_cast<uintptr_t>(result);
         }
     });
-    
+
     respect_check_hook_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x38f71d, [](SafetyHookContext& ctx)
     {
         const auto offset = reinterpret_cast<CHARACTER_WORK*>(ctx.esi);
@@ -304,7 +290,7 @@ auto GGFramework::initialize() -> void
         {
             if (idno - static_cast<uint32_t>(CharacterID::Justice) > push_collis_.size()) return;
             ctx.eax = push_collis_[idno - static_cast<uint32_t>(CharacterID::Justice) - 1].stand_height;
-            ctx.eip = reinterpret_cast<uintptr_t>(base) + 0x14bd96; 
+            ctx.eip = reinterpret_cast<uintptr_t>(base) + 0x14bd96;
         }
     });
 
@@ -315,7 +301,7 @@ auto GGFramework::initialize() -> void
         {
             if (idno - static_cast<uint32_t>(CharacterID::Justice) > push_collis_.size()) return;
             ctx.eax = push_collis_[idno - static_cast<uint32_t>(CharacterID::Justice) - 1].stand_height;
-            ctx.eip = reinterpret_cast<uintptr_t>(base) + 0x14be69; 
+            ctx.eip = reinterpret_cast<uintptr_t>(base) + 0x14be69;
         }
     });
 
@@ -337,7 +323,7 @@ auto GGFramework::initialize() -> void
         {
             if (idno - static_cast<uint32_t>(CharacterID::Justice) > push_collis_.size()) return;
             ctx.eax = push_collis_[idno - static_cast<uint32_t>(CharacterID::Justice) - 1].sky_base_height;
-            ctx.eip = reinterpret_cast<uintptr_t>(base) + 0x14bde4; 
+            ctx.eip = reinterpret_cast<uintptr_t>(base) + 0x14bde4;
         }
     });
 
@@ -436,19 +422,19 @@ auto GGFramework::initialize() -> void
 
         ctx.eip = reinterpret_cast<uintptr_t>(base) + (player_id > chara_paths_.size() + static_cast<uint32_t>(CharacterID::Justice)
                                                        || enemy_id > chara_paths_.size() + static_cast<uint32_t>(CharacterID::Justice)
-                                                       ? 0x1206bd : 0x12066a);
+                                                           ? 0x1206bd : 0x12066a);
     });
 
     player_throw_flag_set_hook_2_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x120629, [](SafetyHookContext& ctx)
     {
         auto player_id = ctx.eax / 0x1A;
         auto enemy_id = ctx.edx;
-        
+
         ctx.eip = reinterpret_cast<uintptr_t>(base) + (player_id > chara_paths_.size() + static_cast<uint32_t>(CharacterID::Justice)
                                                        || enemy_id > chara_paths_.size() + static_cast<uint32_t>(CharacterID::Justice)
-                                                       ? 0x1206bd : 0x12063a);
+                                                           ? 0x1206bd : 0x12063a);
     });
-    
+
     throw_range_check_hook_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x12030D, [](SafetyHookContext& ctx)
     {
         if (static_cast<CharacterID>(ctx.ecx) > CharacterID::Justice)
@@ -573,6 +559,19 @@ auto GGFramework::initialize() -> void
     });
 }
 
+auto GGFramework::get_instance() -> GGFramework*
+{
+    if (instance_ == nullptr)
+    {
+        std::lock_guard lock(mtx_);
+        if (instance_ == nullptr)
+        {
+            instance_ = new GGFramework();
+        }
+    }
+    return instance_;
+}
+
 auto GGFramework::register_act_tb(void* act_tb) -> void
 {
     act_tbs.push_back(act_tb);
@@ -605,60 +604,60 @@ auto GGFramework::register_respect_check_func(int32_t(* func)(CHARACTER_WORK*)) 
 
 auto GGFramework::register_special_attack_check_func(int32_t(* func)(CHARACTER_WORK*)) -> void
 {
-    special_attack_check_funcs_.push_back(func);    
+    special_attack_check_funcs_.push_back(func);
 }
 
 auto GGFramework::register_push_colli(const PushColli& push_colli) -> void
 {
-    push_collis_.push_back(push_colli);    
+    push_collis_.push_back(push_colli);
 }
 
-auto GGFramework::register_normal_attack_disable(uint32_t disable) -> void
+auto GGFramework::register_normal_attack_disable(const uint32_t disable) -> void
 {
-    normal_attack_disables_.push_back(disable); 
+    normal_attack_disables_.push_back(disable);
 }
 
-auto GGFramework::register_near_slash_dist(int16_t dist) -> void
+auto GGFramework::register_near_slash_dist(const int16_t dist) -> void
 {
     near_slash_dists_.push_back(dist);
 }
 
-auto GGFramework::register_throw_range(int16_t range) -> void
+auto GGFramework::register_throw_range(const int16_t range) -> void
 {
     throw_ranges_.push_back(range);
 }
 
-auto GGFramework::register_air_throw_range_x(int16_t range) -> void
+auto GGFramework::register_air_throw_range_x(const int16_t range) -> void
 {
     air_throw_ranges_x_.push_back(range);
 }
 
-auto GGFramework::register_air_throw_range_y(int16_t range) -> void
+auto GGFramework::register_air_throw_range_y(const int16_t range) -> void
 {
     air_throw_ranges_y_.push_back(range);
 }
 
-auto GGFramework::register_air_throw_range_y_bottom(int16_t range) -> void
+auto GGFramework::register_air_throw_range_y_bottom(const int16_t range) -> void
 {
     air_throw_ranges_y_bottom_.push_back(range);
 }
 
-auto GGFramework::register_throw_act_no(uint16_t no) -> void
+auto GGFramework::register_throw_act_no(const uint16_t no) -> void
 {
     throw_act_nos_.push_back(no);
 }
 
-auto GGFramework::register_throw_damage_no_tb(std::vector<uint16_t> tb) -> void
+auto GGFramework::register_throw_damage_no_tb(const std::vector<uint16_t> &tb) -> void
 {
     throw_damage_no_tbs.push_back(tb);
 }
 
-auto GGFramework::register_air_throw_act_no(uint16_t no) -> void
+auto GGFramework::register_air_throw_act_no(const uint16_t no) -> void
 {
     air_throw_act_nos_.push_back(no);
 }
 
-auto GGFramework::register_air_throw_damage_no_tb(std::vector<uint16_t> tb) -> void
+auto GGFramework::register_air_throw_damage_no_tb(const std::vector<uint16_t> &tb) -> void
 {
     air_throw_damage_no_tbs.push_back(tb);
 }

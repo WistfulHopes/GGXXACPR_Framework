@@ -115,7 +115,7 @@ public:
     static auto GGFRAMEWORK_API register_air_throw_range_y(int16_t range) -> void;
     static auto GGFRAMEWORK_API register_air_throw_range_y_bottom(int16_t range) -> void;
     static auto GGFRAMEWORK_API register_throw_act_no(uint16_t no) -> void;
-    static auto GGFRAMEWORK_API register_throw_damage_no_tb(std::vector<uint16_t> tb) -> void;
+    static auto GGFRAMEWORK_API register_throw_damage_no_tb(const std::vector<uint16_t> &tb) -> void;
     static auto GGFRAMEWORK_API register_air_throw_act_no(uint16_t no) -> void;
-    static auto GGFRAMEWORK_API register_air_throw_damage_no_tb(std::vector<uint16_t> tb) -> void;
+    static auto GGFRAMEWORK_API register_air_throw_damage_no_tb(const std::vector<uint16_t> &tb) -> void;
 };
