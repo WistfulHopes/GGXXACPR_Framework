@@ -38,6 +38,7 @@ auto GGFramework::initialize() -> void
 
     game_version_ = reinterpret_cast<int*>(reinterpret_cast<uintptr_t>(base) + 0x6d0538);
 
+    /* example
     register_chara_id("sl_reload");
     register_act_tb(reinterpret_cast<void*>(reinterpret_cast<uintptr_t>(base) + 0x5f08b8));
     register_obj_id(&obj_id_tb);
@@ -63,7 +64,7 @@ auto GGFramework::initialize() -> void
     register_air_throw_damage_no_tb({
         0x00, 0xCD, 0xAD, 0xAF, 0xAC, 0xB4, 0xC2, 0xC7, 0xA7, 0xAA, 0xCE, 0x9D, 0xD3, 0xC4, 0xB6, 0xAE, 0x9B, 0xCB, 0xA3,
         0x82, 0x9F, 0xAD, 0x90, 0xCD, 0xB1, 0xAE,
-    });
+    });*/
 
     player_main_hook_ = safetyhook::create_mid(reinterpret_cast<uintptr_t>(base) + 0x137b5e, [](SafetyHookContext& ctx)
     {
